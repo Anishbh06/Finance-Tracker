@@ -1,0 +1,112 @@
+{% extends 'layouts/app.html' %}
+
+{% block title %}Dashboard - Expense Tracker{% endblock %}
+
+{% block breadcrumb %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Total Expenses Card -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Expenses
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                ₹5,000
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-wallet fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Expense Button -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
+                + Add Expense
+            </button>
+        </div>
+    </div>
+
+    <!-- Recent Expenses Table -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Recent Expenses</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2025-03-01</td>
+                            <td>Food</td>
+                            <td>₹250</td>
+                        </tr>
+                        <tr>
+                            <td>2025-02-29</td>
+                            <td>Transport</td>
+                            <td>₹120</td>
+                        </tr>
+                        <tr>
+                            <td>2025-02-28</td>
+                            <td>Shopping</td>
+                            <td>₹1,500</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Expense Modal -->
+<div class="modal fade" id="addExpenseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Expense</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'add_expense' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="expense_date" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="expense_date" name="date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-control" id="category" name="category" required>
+                            <option value="Food">Food</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input type="number" class="form-control" id="amount" name="amount" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Expense</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
